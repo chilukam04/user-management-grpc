@@ -5,10 +5,6 @@ This project implements a user management system using gRPC and Protocol Buffers
 ## Table of Contents
 * [Features](#features)
 * [Setup Instructions](#setup-instructions)
-* [Backend Endpoints](#backend-endpoints)
-* [Frontend Workflow](#frontend-workflow)
-* [Usage](#usage)
-* [Environment Variables](#environment-variables)
 
 ## Features
 - Full gRPC server and client implementation.
