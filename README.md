@@ -74,5 +74,13 @@ In a separate terminal, run the client to interact with the server:
 cd server
 python client.py
 ```
-If everything is set up correctly, you’ll see outputs for user creation and retrieval.
+If everything is set up correctly, you’ll see outputs for user creation and retrieval. It should follow a similar format to below...
+```bash
+Server is running on port 500051...
+User created: userID: "1"
+firstName: "John"
+lastName: "Doe"
+email: "john.doe@example.com"
+```
+
 
