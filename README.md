@@ -24,3 +24,17 @@ Clone the repository to your local machine:
 ```bash
 git clone https://github.com/chilukam04/user-management-grpc.git
 cd user-management-grpc
+
+### **2. Set Up a Virtual Environment**
+Create and activate a Python virtual environment:
+
+```bash
+# Create a virtual environment
+python -m venv venv
+
+# Activate the virtual environment
+# For Windows:
+.\venv\Scripts\activate
+# For macOS/Linux:
+source venv/bin/activate
+
