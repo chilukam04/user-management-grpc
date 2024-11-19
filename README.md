@@ -31,8 +31,7 @@ git clone <repository-url>
 cd <repository-name>
 ```
 
-2. Create a `.env` file in the root directory 
-3. 
+### 2. Create a `.env` file in the root directory 
 Create a virtual environment
 python -m venv venv
 
@@ -44,13 +43,13 @@ For Windows:
 For macOS/Linux:
 source venv/bin/activate
 
-### Install Dependencies
+### 3. Install Dependencies
 
 1. Install the required Python packages:
 ```bash
 pip install grpcio grpcio-tools
 ```
-### Compile the .proto Files
+### 4. Compile the .proto Files
 Generate the gRPC Python code from the user_management.proto file:
 ```bash
 python -m grpc_tools.protoc -I=protos --python_out=server --grpc_python_out=server protos/user_management.proto
@@ -62,7 +61,7 @@ This will generate:
 - 
 These files will be placed in the server directory.
 
-## Run the gRPC Server
+## 5. Run the gRPC Server
 Start the gRPC server:
 ```bash
 cd server
@@ -73,7 +72,7 @@ You should see:
 Server is running on port 50051...
 ```
 
-## Test with the gRPC Client
+## 6. Test with the gRPC Client
 In a separate terminal, run the client to interact with the server:
 ```bash
 cd server
