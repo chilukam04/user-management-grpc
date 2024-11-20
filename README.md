@@ -27,7 +27,7 @@ git clone <repository-url>
 cd <repository-name>
 ```
 
-### 2. Create a `.env` file in the root directory 
+### 2. Add virtual environment
 Create a virtual environment
 python -m venv venv
 
@@ -76,11 +76,53 @@ python client.py
 ```
 If everything is set up correctly, you’ll see outputs for user creation and retrieval. It should follow a similar format to below...
 ```bash
-Server is running on port 500051...
-User created: userID: "1"
-firstName: "John"
-lastName: "Doe"
-email: "john.doe@example.com"
-```
 
 
+(Server terminal)Server is running on port 500051...
+
+(Client terminal)
+Creating a new user...
+CreateUser Response: user {
+  userId: "123"
+  firstName: "John"
+  lastName: "Doe"
+  email: "john.doe@example.com"
+  createdAt {
+    seconds: 1732140958
+    nanos: 630077000
+  }
+  updatedAt {
+    seconds: 1732140958
+    nanos: 630166000
+  }
+}
+
+Fetching the user...
+GetUser Response: user {
+  userId: "123"
+  firstName: "John"
+  lastName: "Doe"
+  email: "john.doe@example.com"
+  createdAt {
+    seconds: 1732140958
+    nanos: 630077000
+  }
+  updatedAt {
+    seconds: 1732140958
+    nanos: 630166000
+  }
+}
+
+Creating a new group...
+CreateGroup Response: group {
+  groupId: "a1878196-a905-4cbd-86d8-e59c05680cd1"
+  name: "Developers"
+  description: "A group for developers"
+}
+
+Fetching the group...
+GetGroup Response: group {
+  groupId: "a1878196-a905-4cbd-86d8-e59c05680cd1"
+  name: "Developers"
+  description: "A group for developers"
+}
