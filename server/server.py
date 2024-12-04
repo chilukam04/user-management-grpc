@@ -10,7 +10,7 @@ import uuid
 users_db = {}
 groups_db = {}
 
-# Helper function to get current timestamp
+# Helper function to get the current timestamp
 def get_current_timestamp():
     now = datetime.datetime.utcnow()
     timestamp = Timestamp()
@@ -25,13 +25,16 @@ class UserManagementServicer(user_management_pb2_grpc.UserManagementServicer):
             context.set_code(grpc.StatusCode.ALREADY_EXISTS)
             context.set_details("User already exists")
             return user_management_pb2.CreateUserResponse()
-        
+
         # Add user to in-memory database
         new_user = {
             "userId": user_id,
             "firstName": request.user.firstName,
             "lastName": request.user.lastName,
             "email": request.user.email,
+            "department": request.user.department,
+            "height": request.user.height,
+            "weight": request.user.weight,
             "createdAt": get_current_timestamp(),
             "updatedAt": get_current_timestamp(),
         }
@@ -43,6 +46,9 @@ class UserManagementServicer(user_management_pb2_grpc.UserManagementServicer):
                 firstName=new_user["firstName"],
                 lastName=new_user["lastName"],
                 email=new_user["email"],
+                department=new_user["department"],
+                height=new_user["height"],
+                weight=new_user["weight"],
                 createdAt=new_user["createdAt"],
                 updatedAt=new_user["updatedAt"],
             )
@@ -56,13 +62,16 @@ class UserManagementServicer(user_management_pb2_grpc.UserManagementServicer):
             context.set_code(grpc.StatusCode.NOT_FOUND)
             context.set_details("User not found")
             return user_management_pb2.GetUserResponse()
-        
+
         return user_management_pb2.GetUserResponse(
             user=user_management_pb2.UserProfile(
                 userId=user["userId"],
                 firstName=user["firstName"],
                 lastName=user["lastName"],
                 email=user["email"],
+                department=user["department"],
+                height=user["height"],
+                weight=user["weight"],
                 createdAt=user["createdAt"],
                 updatedAt=user["updatedAt"],
             )
@@ -91,6 +100,18 @@ class UserManagementServicer(user_management_pb2_grpc.UserManagementServicer):
             )
         )
 
+    # Delete a group
+    def DeleteGroup(self, request, context):
+        group_id = request.groupId
+        if group_id not in groups_db:
+            context.set_code(grpc.StatusCode.NOT_FOUND)
+            context.set_details("Group not found")
+            return user_management_pb2.DeleteGroupResponse()
+
+        # Remove group from in-memory database
+        del groups_db[group_id]
+
+        return user_management_pb2.DeleteGroupResponse()
 
 def serve():
     server = grpc.server(futures.ThreadPoolExecutor(max_workers=10))

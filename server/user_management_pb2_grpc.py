@@ -40,6 +40,11 @@ class UserManagementStub(object):
                 request_serializer=user__management__pb2.CreateUserRequest.SerializeToString,
                 response_deserializer=user__management__pb2.CreateUserResponse.FromString,
                 _registered_method=True)
+        self.DeleteGroup = channel.unary_unary(
+                '/usermanagement.UserManagement/DeleteGroup',
+                request_serializer=user__management__pb2.DeleteGroupRequest.SerializeToString,
+                response_deserializer=user__management__pb2.DeleteGroupResponse.FromString,
+                _registered_method=True)
         self.GetUser = channel.unary_unary(
                 '/usermanagement.UserManagement/GetUser',
                 request_serializer=user__management__pb2.GetUserRequest.SerializeToString,
@@ -64,6 +69,12 @@ class UserManagementServicer(object):
     def CreateUser(self, request, context):
         """Creates a new user
         """
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
+    def DeleteGroup(self, request, context):
+        """Missing associated documentation comment in .proto file."""
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
@@ -96,6 +107,11 @@ def add_UserManagementServicer_to_server(servicer, server):
                     servicer.CreateUser,
                     request_deserializer=user__management__pb2.CreateUserRequest.FromString,
                     response_serializer=user__management__pb2.CreateUserResponse.SerializeToString,
+            ),
+            'DeleteGroup': grpc.unary_unary_rpc_method_handler(
+                    servicer.DeleteGroup,
+                    request_deserializer=user__management__pb2.DeleteGroupRequest.FromString,
+                    response_serializer=user__management__pb2.DeleteGroupResponse.SerializeToString,
             ),
             'GetUser': grpc.unary_unary_rpc_method_handler(
                     servicer.GetUser,
@@ -141,6 +157,33 @@ class UserManagement(object):
             '/usermanagement.UserManagement/CreateUser',
             user__management__pb2.CreateUserRequest.SerializeToString,
             user__management__pb2.CreateUserResponse.FromString,
+            options,
+            channel_credentials,
+            insecure,
+            call_credentials,
+            compression,
+            wait_for_ready,
+            timeout,
+            metadata,
+            _registered_method=True)
+
+    @staticmethod
+    def DeleteGroup(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(
+            request,
+            target,
+            '/usermanagement.UserManagement/DeleteGroup',
+            user__management__pb2.DeleteGroupRequest.SerializeToString,
+            user__management__pb2.DeleteGroupResponse.FromString,
             options,
             channel_credentials,
             insecure,

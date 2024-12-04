@@ -4,16 +4,17 @@ package usermanagement;
 
 import "google/protobuf/timestamp.proto";
 
-// User profile definition
 message UserProfile {
     string userId = 1;                     // Unique user ID
     string firstName = 2;                  // First name
     string lastName = 3;                   // Last name
-    string email = 4;                      // Email address
-    google.protobuf.Timestamp createdAt = 5; // Time of creation
-    google.protobuf.Timestamp updatedAt = 6; // Time of last update
+    string department = 4;                 // Department
+    float height = 5;                      // Height in meters
+    float weight = 6;                      // Weight in kilograms
+    string email = 7;                      // Email address
+    google.protobuf.Timestamp createdAt = 8; // Time of creation
+    google.protobuf.Timestamp updatedAt = 9; // Time of last update
 }
-
 // Group definition
 message Group {
     string groupId = 1;                    // Unique group ID
@@ -56,11 +57,18 @@ message GetGroupRequest {
 message GetGroupResponse {
     Group group = 1;                       // The fetched group
 }
+message DeleteGroupRequest {
+    string groupId = 1;
+  }
 
+message DeleteGroupResponse {}
 // User Management service definition
 service UserManagement {
     // Creates a new user
     rpc CreateUser (CreateUserRequest) returns (CreateUserResponse);
+
+    rpc DeleteGroup(DeleteGroupRequest) returns (DeleteGroupResponse);
+
 
     // Fetches a user by ID
     rpc GetUser (GetUserRequest) returns (GetUserResponse);
