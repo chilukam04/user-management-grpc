@@ -1,128 +1,160 @@
 # User Management System with gRPC
 
-This project implements a user management system using gRPC and Protocol Buffers. It provides a backend service for managing user profiles and groups, featuring operations like creating, retrieving, and managing users and groups.
+This project implements a user management system using gRPC and Protocol Buffers. It provides a backend service for managing user profiles and groups, featuring operations like creating, retrieving, and managing users and groups. Additionally, it includes a REST proxy for easier integration with frontend applications.
 
-## Table of Contents
-* [Features](#features)
-* [Setup Instructions](#setup-instructions)
+---
+
+Here's a walkthrough of implemented required features:
+
+![Video Walkthrough](/VIP_Final.gif)
 
 ## Features
+
 - Full gRPC server and client implementation.
+- REST proxy to interact with gRPC services.
 - Protobuf-defined models for `UserProfile` and `Group`.
 - gRPC methods:
   - `CreateUser`
   - `GetUser`
   - `CreateGroup`
   - `GetGroup`
-- Extensible for adding more functionalities like `DeleteUser` or `UpdateUser`.
+  - `DeleteGroup`
+- Extensible for adding more functionalities like `UpdateUser`, `DeleteUser`, or `GetGroupsByUser`.
+- Frontend integration with REST API and gRPC services.
+
+---
+
+## Objectives
+
+- **Frontend UI**:
+  - Create and manage user profiles and groups.
+  - First-time login flow prompting users to complete missing profile details.
+- **Backend Services**:
+  - Fully integrated gRPC backend with REST proxy.
+- **Deliverables**:
+  - A screencast demonstrating user login flow and user management features.
 
 ---
 
 ## Setup Instructions
 
 ### 1. Clone the Repository
-1. Clone the repository:
+
 ```bash
 git clone <repository-url>
 cd <repository-name>
 ```
 
-### 2. Add virtual environment
-Create a virtual environment
+---
+
+### 2. Set Up the Environment
+
+#### Create and activate a virtual environment:
+
+```bash
+# Create a virtual environment
 python -m venv venv
 
-Activate the virtual environment
-
-For Windows:
-.\venv\Scripts\activate
-
-For macOS/Linux:
+# Activate the virtual environment
+# For Windows:
+.env\Scriptsctivate
+# For macOS/Linux:
 source venv/bin/activate
+```
+
+---
 
 ### 3. Install Dependencies
 
-1. Install the required Python packages:
+Install the required Python packages:
+
 ```bash
-pip install grpcio grpcio-tools
+pip install grpcio grpcio-tools flask flask-cors requests
 ```
-### 4. Compile the .proto Files
-Generate the gRPC Python code from the user_management.proto file:
+
+---
+
+### 4. Compile the `.proto` Files
+
+Generate the gRPC Python code from the `user_management.proto` file:
+
 ```bash
 python -m grpc_tools.protoc -I=protos --python_out=server --grpc_python_out=server protos/user_management.proto
 ```
+
 This will generate:
+- `user_management_pb2.py`
+- `user_management_pb2_grpc.py`
 
-- user_management_pb2.py
-- user_management_pb2_grpc.py
-- 
-These files will be placed in the server directory.
+These files will be placed in the `server` directory.
 
-## 5. Run the gRPC Server
-Start the gRPC server:
+---
+
+### 5. Start the gRPC Server
+
+Run the gRPC server:
+
 ```bash
 cd server
 python server.py
 ```
+
 You should see:
-```bash
+
+```plaintext
 Server is running on port 50051...
 ```
 
-## 6. Test with the gRPC Client
-In a separate terminal, run the client to interact with the server:
+---
+
+### 6. Start the REST Proxy
+
+Run the REST proxy to expose gRPC methods as REST endpoints:
+
 ```bash
 cd server
-python client.py
+python rest_proxy.py
 ```
-If everything is set up correctly, you’ll see outputs for user creation and retrieval. It should follow a similar format to below...
-```bash
 
+You should see:
 
-(Server terminal)Server is running on port 500051...
+```plaintext
+ * Running on http://127.0.0.1:8080
+```
 
-(Client terminal)
-Creating a new user...
-CreateUser Response: user {
-  userId: "123"
-  firstName: "John"
-  lastName: "Doe"
-  email: "john.doe@example.com"
-  createdAt {
-    seconds: 1732140958
-    nanos: 630077000
-  }
-  updatedAt {
-    seconds: 1732140958
-    nanos: 630166000
-  }
-}
+---
 
-Fetching the user...
-GetUser Response: user {
-  userId: "123"
-  firstName: "John"
-  lastName: "Doe"
-  email: "john.doe@example.com"
-  createdAt {
-    seconds: 1732140958
-    nanos: 630077000
-  }
-  updatedAt {
-    seconds: 1732140958
-    nanos: 630166000
-  }
-}
+### 7. Frontend Integration
 
-Creating a new group...
-CreateGroup Response: group {
-  groupId: "a1878196-a905-4cbd-86d8-e59c05680cd1"
-  name: "Developers"
-  description: "A group for developers"
-}
+Ensure your frontend is configured to interact with the REST proxy at `http://localhost:8080`. The following REST endpoints are available:
 
-Fetching the group...
-GetGroup Response: group {
-  groupId: "a1878196-a905-4cbd-86d8-e59c05680cd1"
-  name: "Developers"
-  description: "A group for developers"
-}
+- `POST /api/create_user`: Create a new user.
+- `GET /api/get_user/<user_id>`: Fetch user details by ID.
+- `POST /api/create_group`: Create a new group.
+- `DELETE /api/delete_group/<group_id>`: Delete a group by ID
+
+---
+
+## Screencast Deliverable
+
+To demonstrate the system:
+
+1. Record a screencast (2-4 minutes) showcasing:
+   - User login flow.
+   - Managing user profiles and groups.
+   - Integration of the frontend UI with REST endpoints.
+
+---
+
+## Future Enhancements
+
+- Implement `UpdateUser` and `DeleteUser` functionalities.
+- Add pagination for group listings.
+- Enable more detailed user activity logs.
+- Migrate to a production-grade database for persistence.
+
+---
+
+## License
+
+This project is licensed under the MIT License. See the LICENSE file for details.
